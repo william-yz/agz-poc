@@ -20,19 +20,19 @@ const navs = [{
     }]
   }]
 
-export default class App extends Component {
-  render() {
-    return(
-      <Layout>
-        <Sider
-          style={{height: '600px'}}>
-          <Nav navs={navs}></Nav>
-        </Sider>
-        <Content
-          style={{height: '600px'}}>
-          { this.props.children }
-        </Content>
-      </Layout>
-    )
-  }
+const App = ({children}) => {
+  return (
+    <Layout>
+      <Sider
+        style={{height: '600px'}}>
+        <Nav navs={navs}></Nav>
+      </Sider>
+      <Content
+        style={{height: '600px'}}>
+        { children }
+      </Content>
+    </Layout>
+  )
 }
+
+export default App

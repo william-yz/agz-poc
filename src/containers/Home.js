@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 
-export default class Home extends Component {
-  render () {
-    return (
-      <div>
-        123
-      </div>
-    )
-  }
+const Home = (props) => {
+  return (
+    <div>
+      123
+    </div>
+  )
 }
+
+export default Home

@@ -3,13 +3,12 @@ import { Menu } from 'antd'
 const { Item, SubMenu } = Menu
 import { Link } from 'react-router'
 
-export default class Nav extends Component {
-  render () {
-    return (
+const Nav = ({navs}) => {
+  return (
       <Menu
         mode="inline">
         {
-          this.props.navs.map(nav => (
+          navs.map(nav => (
             <SubMenu title={nav.title} key={nav.title}>
               {
                 nav.children.map(child => (
@@ -23,9 +22,8 @@ export default class Nav extends Component {
           }
       </Menu>
       )
-
-  }
 }
+export default Nav
 
 Nav.propTypes = {
   navs: PropTypes.arrayOf(PropTypes.shape({

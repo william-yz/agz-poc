@@ -1,11 +1,12 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-export default class Grid extends Component {
-  render () {
-    return (
-      <div>
-        456
-      </div>
-    )
-  }
+const Grid = (props) => {
+  return (
+    <div>
+      456
+    </div>
+  )
 }
+
+
+export default Grid
