@@ -5,7 +5,7 @@ import { Layout, Menu } from 'antd'
 const { Sider, Content } = Layout
 const { Item, ItemGroup } = Menu
 
-import Nav from '../components/nav'
+import { Nav } from '../components'
 
 const navs = [{
     title: 'hhh',
@@ -24,7 +24,8 @@ const App = ({children}) => {
   return (
     <Layout>
       <Sider
-        style={{height: '600px'}}>
+        style={{height: '600px'}}
+        collapsible="true">
         <Nav navs={navs}></Nav>
       </Sider>
       <Content

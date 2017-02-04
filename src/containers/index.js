@@ -1,3 +1,3 @@
 export App from './App'
-export Grid from './Grid'
+export CustomGrid from './customGrid'
 export Home from './Home'

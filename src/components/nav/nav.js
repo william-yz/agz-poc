@@ -6,6 +6,7 @@ import { Link } from 'react-router'
 const Nav = ({navs}) => {
   return (
       <Menu
+        theme="dark"
         mode="inline">
         {
           navs.map(nav => (
