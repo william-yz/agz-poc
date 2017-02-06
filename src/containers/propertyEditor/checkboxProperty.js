@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 
 import {Input, Form, Checkbox} from 'antd'
 const FormItem = Form.Item
-const InputProperty = ({form, metas}) => {
+const CheckboxProperty = ({form, metas}) => {
   const { getFieldDecorator } = form
   return (
     <Form>
@@ -21,40 +21,37 @@ const InputProperty = ({form, metas}) => {
             <Checkbox />
           )}
       </FormItem>
-      <FormItem
-        label="默认值">
-        {getFieldDecorator('defaultValue',{
-          })(
-            <Input />
-          )}
-      </FormItem>
     </Form>
   )
 }
 
-InputProperty.propTypes = {
+CheckboxProperty.propTypes = {
   form: PropTypes.any.isRequired,
   metas: PropTypes.shape({
-    input: PropTypes.shape({
+    checkbox: PropTypes.shape({
       label: PropTypes.string.isRequired,
-      isRequired: PropTypes.bool.isRequired,
+      options: PropTypes.arrayOf(PropTypes.shape({
+        label: PropTypes.string.isRequired,
+        value: PropTypes.string.isRequired,
+        disabled: PropTypes.bool
+      })),
       defaultValue: PropTypes.string
     }).isRequired
   }).isRequired
 }
 const onFieldsChange = ({metas, onFieldChange}, fields) => {
-  var input = metas.input
+  var checkbox = metas.checkbox
   for (var fieldName in fields) {
     onFieldChange({
-      input: {
-        ...input,
+      checkbox: {
+        ...checkbox,
         [fieldName]: fields[fieldName].value
       }
     })
   }
 }
 const mapPropsToFields = ({metas, type}) => {
-  const meta = metas.input
+  const meta = metas.checkbox
   var fields = {}
   for (var fieldName in meta) {
     fields[fieldName] = {
@@ -74,4 +71,4 @@ function mapDispatchToProps(dispatch) {
     onFieldChange: (metas) => dispatch({type: 'UPDATE_PROPERTY', payload: metas})
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(Form.create({onFieldsChange, mapPropsToFields})(InputProperty))
+export default connect(mapStateToProps, mapDispatchToProps)(Form.create({onFieldsChange, mapPropsToFields})(CheckboxProperty))

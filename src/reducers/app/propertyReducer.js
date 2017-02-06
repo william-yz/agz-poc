@@ -1,12 +1,20 @@
 const input = {
   isRequired: false,
-  label: '1234'
+  label: 'Label',
+  defaultValue: ''
 },
 number = {
-
+  isRequired: false,
+  label: 'Label',
+  defaultValue: ''
 },
 checkbox = {
-
+  label: 'Label',
+  options: [{
+    label: 'Option1',
+    value: 'options1'
+  }],
+  defaultValue: ''
 },
 select = {
 
@@ -29,7 +37,8 @@ const reducer = (state = {
 
   switch (action.type) {
     case 'UPDATE_PROPERTY':
-      return Object.assign({}, state, {metas: action.payload});
+      var newMetas = Object.assign({}, state.metas, action.payload)
+      return Object.assign({}, state, {metas: newMetas});
     default: return state;
   }
 };
