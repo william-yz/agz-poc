@@ -14,6 +14,9 @@ export default new Vuex.Store({
     },
     setEdit (state, payload) {
       state.underEdit = payload
+    },
+    setElements (state, payload) {
+      state.elements = payload
     }
   },
   getters: {
@@ -63,6 +66,9 @@ export default new Vuex.Store({
     },
     setEdit ({commit}, payload) {
       commit('setEdit', payload)
+    },
+    setElements ({commit}, elements) {
+      commit('setElements', elements)
     }
   }
 })
