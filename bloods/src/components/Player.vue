@@ -6,6 +6,20 @@
       </span>
     </div>
     <br />
+    <div v-if="player.isCurrent">
+      <el-button v-if="player.check.canPeng">
+        Peng
+      </el-button>
+      <el-button v-if="player.check.canGang">
+        Gang
+      </el-button>
+      <el-button v-if="player.check.canHu">
+        Hu
+      </el-button>
+      <el-button>
+        Pass
+      </el-button>
+    </div>
     <div>
       <span v-for="card in cards">
         <card :card="card" :onClick="put"></card>
@@ -16,6 +30,8 @@
 </template>
 <script>
   import Card from './Card'
+  import {judge} from '../model/judge'
+  import {range} from '../utils'
   import _ from 'lodash'
   export default {
     name: 'Player',
@@ -25,8 +41,8 @@
     },
     data () {
       return {
-        lastGet: null,
-        putted: []
+        putted: [],
+        ting: []
       }
     },
     computed: {
@@ -35,7 +51,7 @@
         var hasReturn = !this.lastGet
         _.each(this.player.cards, (colors, color) => {
           _.each(colors, (v, value) => {
-            if (!hasReturn && this.lastGet.color === color && this.lastGet.value === value) {
+            if (!hasReturn && this.player.lastGet.color === color && this.player.lastGet.value === value) {
               hasReturn = true
               return
             }
@@ -47,32 +63,31 @@
             }
           })
         })
-        this.lastGet && cards.push(this.lastGet)
+        this.player.lastGet && cards.push(this.player.lastGet)
         return cards
       }
     },
     methods: {
-      get () {
-        const next = this.next()
-        this.hands[next.color][next.value] ++
-        this.lastGet = next
-      },
       put (card) {
-        var cards = this.player.cards
-        cards[card.color].splice(card.value, 1, cards[card.color][card.value] - 1)
-        this.putted.push(card)
-        this.lastGet = null
-        // this.ting = judge(cards)
-        // var next = this.next
-        // var check
-        // range(3, () => {
-        //   check = next.check(card)
-        //   if (check.canPeng || check.canGang || check.canHu) {
-        //     return false
-        //   }
-        //   next = next.next
-        // })
-        // return {next, ...check}
+        if (this.player.isCurrent) {
+          this.player.isCurrent = false
+          var cards = this.player.cards
+          cards[card.color].splice(card.value, 1, cards[card.color][card.value] - 1)
+          this.putted.push(card)
+          this.player.lastGet = null
+          var next = this.player.next
+          var check
+          range(3, () => {
+            check = next.check(card)
+            next.check = check
+            next.ting = judge(this.player.cards)
+            if (check.canPeng || check.canGang || check.canHu) {
+              next.isCurrent = true
+              next.conside()
+            }
+            next = next.next
+          })
+        }
       }
     }
   }

@@ -17,9 +17,6 @@ export default class Mahjong {
     return mahjongs
   }
 
-  size () {
-    return this.mahjongs.length
-  }
   next () {
     const next = this.mahjongs.pop()
     const value = Math.floor(next % 36 / 4) % 9

@@ -23,32 +23,75 @@
         })
         return mahjongs
       })()
+      const me = this
+      const __proto__ = {
+        get () {
+          const next = me.next()
+          this.cards[next.color].splice(next.value, 1, this.cards[next.color][next.value] + 1)
+          this.lastGet = next
+        },
+        check (card) {
+          var canPeng = false
+          var canGang = false
+          var canHu = false
+          range(3, color => {
+            range(9, value => {
+              if (card.color === color && card.value === value) {
+                canPeng = this.cards[color][value] > 1
+                canGang = this.cards[color][value] > 2
+                return false
+              }
+            })
+            return !canPeng
+          })
+          for (var i = 0; i < this.ting.length; i++) {
+            if (card.color === this.ting[i].color && card.value === this.ting[i].value) {
+              canHu = true
+              break
+            }
+          }
+          return {canPeng, canGang, canHu}
+        },
+        conside () {
+
+        }
+      }
       this.north = {
+        __proto__,
         cards: this.initPlayer(),
         isCurrent: false,
-        position: 'north'
+        position: 'north',
+        ting: []
       }
       this.west = {
+        __proto__,
         cards: this.initPlayer(),
         isCurrent: false,
-        position: 'west'
+        position: 'west',
+        ting: []
       }
       this.east = {
+        __proto__,
         cards: this.initPlayer(),
         isCurrent: false,
-        position: 'east'
+        position: 'east',
+        ting: []
       }
       this.south = {
+        __proto__,
         cards: this.initPlayer(),
         isCurrent: false,
-        position: 'south'
+        position: 'south',
+        ting: []
       }
       this.north.next = this.west
       this.west.next = this.south
       this.south.next = this.east
       this.east.next = this.north
       this.players = [this.north, this.west, this.east, this.south]
-      oneOf(this.players).isCurrent = true
+      this.current = oneOf(this.players)
+      this.current.isCurrent = true
+      this.current.get()
     },
     computed: {
     },
