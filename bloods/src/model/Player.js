@@ -1,5 +1,5 @@
 import { range } from '../utils'
-import {WAITING, GETTED} from 'src/model/constants'
+import { WAITING, GETTED } from 'src/model/constants'
 import _ from 'lodash'
 
 export default class Player {
@@ -9,14 +9,15 @@ export default class Player {
     this.cards = [[0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0]]
     this.putted = []
     this.lastGet = null
-    this.peng = []
+    this.pengs = []
+    this.gangs = []
     this.init()
   }
 
   init () {
     range(13, () => {
       const next = this.mahjong.next()
-      this.cards[next.color][next.value] ++
+      this.cards[next.color][next.value]++
     })
   }
 
@@ -27,7 +28,7 @@ export default class Player {
         all += this.cards[i][j]
       })
     })
-    return all
+    return all + this.pengs.length * 3 + this.gangs.length * 3
   }
 
   setStatus (status) {
@@ -50,13 +51,12 @@ export default class Player {
 
   getCards () {
     var cards = []
-    var hasReturn = !this.lastGet
     _.each(this.cards, (colors, color) => {
       _.each(colors, (v, value) => {
-        if (!hasReturn && this.lastGet.color === color && this.lastGet.value === value) {
-          hasReturn = true
-          return
+        if (this.lastGet && this.lastGet.color === color && this.lastGet.value === value) {
+          v--
         }
+        console.log(v)
         for (var i = 0; i < v; i++) {
           cards.push({
             color,
@@ -65,13 +65,28 @@ export default class Player {
         }
       })
     })
-    cards.push(this.lastGet)
+    this.lastGet && cards.push(this.lastGet)
     return cards
+  }
+
+  checkPeng (card) {
+    return this.cards[card.color][card.value] > 1
+  }
+
+  checkGang (card) {
+    return this.cards[card.color][card.value] > 1
   }
 
   peng (card) {
     this.cards[card.color].splice(card.value, 1, this.cards[card.color][card.value] - 2)
-    this.peng.push(card)
+    this.pengs.push(card)
+    this.setStatus(GETTED)
+  }
+
+  gang (card) {
+    this.cards[card.color].splice(card.value, 1, this.cards[card.color][card.value] - 3)
+    this.gangs.push(card)
+    this.get()
     this.setStatus(GETTED)
   }
 }

@@ -44,4 +44,23 @@ describe('Player', function () {
     expect(player.putted.length).to.be.eq(puttedSize + 1)
     expect(player.putted[puttedSize]).to.be.eq(card)
   })
+  it('check', function () {
+    player.cards = [[2, 1, 3, 3, 0, 0, 0, 0, 0], [2, 0, 0, 0, 0, 0, 0, 0, 0], [2, 0, 0, 0, 0, 0, 0, 0, 0]]
+    var cardPeng = {color: 0, value: 0}
+    var cardGang = {color: 0, value: 2}
+    expect(player.checkPeng(cardPeng)).to.be.true
+    expect(player.checkGang(cardGang)).to.be.true
+    expect(player.getCards().length).to.be.eq(13)
+    player.peng(cardPeng)
+    expect(player.pengs.length).to.be.eq(1)
+    expect(player.pengs[0]).to.be.eq(cardPeng)
+    expect(player.getCards().length).to.be.eq(11)
+    expect(player.size()).to.be.eq(14)
+    player.put({color: 1, value: 0})
+    player.gang(cardGang)
+    expect(player.gangs.length).to.be.eq(1)
+    expect(player.gangs[0]).to.be.eq(cardGang)
+    expect(player.getCards().length).to.be.eq(8)
+    expect(player.size()).to.be.eq(14)
+  })
 })
