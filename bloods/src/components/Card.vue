@@ -1,6 +1,6 @@
 <template>
   <el-button
-    class="card"
+    v-bind:class="{ card: type!=='display' }"
     style="margin-right:2px;"
     @click="onClick(card)"
     :type="getColor(card.color)">
@@ -10,7 +10,7 @@
 <script>
   export default {
     name: 'card',
-    props: ['card', 'onClick'],
+    props: ['card', 'onClick', 'type'],
     methods: {
       getColor (color) {
         return {
