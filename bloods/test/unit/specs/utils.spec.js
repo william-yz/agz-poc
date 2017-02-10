@@ -1,4 +1,4 @@
-import {range, nextInt, oneOf} from 'src/utils'
+const {range, nextInt, oneOf} = require('src/utils')
 describe('utils', function () {
   it('range', function () {
     var count = 0

@@ -1,14 +1,14 @@
 const _ = require('lodash')
 
-export function nextInt (i) {
+function nextInt (i) {
   return Math.floor(Math.random() * i)
 }
 
-export function oneOf (array) {
+function oneOf (array) {
   return array[nextInt(array.length)]
 }
 
-export function range (n, callback) {
+function range (n, callback) {
   if (!_.isFunction(callback)) {
     return
   }
@@ -30,4 +30,9 @@ export function range (n, callback) {
       }
     }
   }
+}
+module.exports = {
+  nextInt,
+  range,
+  oneOf
 }

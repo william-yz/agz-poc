@@ -66,7 +66,7 @@ function judgeHu (pp) {
   }
 }
 
-export function judge (pp) {
+function judge (pp) {
   var ting = []
   var p = _.cloneDeep(pp)
   for (let i = 0; i < 3; i++) {
@@ -82,4 +82,7 @@ export function judge (pp) {
     }
   }
   return ting
+}
+module.exports = {
+  judge
 }

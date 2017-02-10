@@ -1,4 +1,13 @@
-export const WAITING = 1
-export const GETTED = 2
-export const CONSIDERING = 4
-export const TINGING = 8
+const WAITING = 1
+const GETTED = 2
+const CONSIDERING = 4
+const GETTED_CONSIDERING = GETTED + CONSIDERING
+const TINGING = 8
+
+module.exports = {
+  WAITING,
+  GETTED,
+  CONSIDERING,
+  GETTED_CONSIDERING,
+  TINGING
+}

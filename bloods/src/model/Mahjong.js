@@ -1,6 +1,6 @@
-import {range, nextInt} from '../utils'
+const {range, nextInt} = require('../utils')
 
-export default class Mahjong {
+module.exports = class Mahjong {
   constructor () {
     this.mahjongs = this.init()
   }
