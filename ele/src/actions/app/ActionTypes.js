@@ -1,0 +1,3 @@
+export default {
+  GET_SOLUTION_BO_LIST: 'GET_SOLUTION_BO_LIST'
+}
