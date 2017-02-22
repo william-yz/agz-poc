@@ -1,0 +1,10 @@
+{
+  "extends": ["standard"],
+  "rules": {
+  },
+  "parserOptions": {
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true
+    }
+  }
+}
