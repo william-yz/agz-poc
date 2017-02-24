@@ -1,16 +1,10 @@
-import Card from '../../../src/models/cards/Card'
+import JiuTunTongZi from '../../../src/models/cards/SSR/JiuTunTongZi'
 
 test('Card', () => {
-  let card = new Card({
-    type: 'S',
-    name: 'CT',
-    rank: {
-      ATK: 'S',
-      DEF: 'S',
-      HP: 'S'
-    }
-  })
-  console.log(card.baseATK)
-  console.log(card.baseHP)
-  console.log(card.baseDEF)
+  let card = new JiuTunTongZi(2)
+  // console.log(card.baseATK)
+  // console.log(card.baseHP)
+  // console.log(card.baseDEF)
+  // console.log(card.rank)
+  expect(card.rank).toEqual({ATK: 'B+', DEF: 'B', HP: 'B'})
 })

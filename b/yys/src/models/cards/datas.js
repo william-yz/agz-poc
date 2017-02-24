@@ -1,15 +1,21 @@
 const pow = Math.pow
 const floor = Math.floor
 
+export const RANKS_MAP = ['C-', 'C', 'C+', 'B-', 'B', 'B+', 'A-', 'A', 'A+', 'S', 'SS', 'SSS']
+
 const ATK = {
-  SSS: 220,
-  SS: 210,
-  S: 200,
-  AP: 195,
-  A: 190,
-  AM: 185,
-  B: 180, 
-  C: 170
+  'SSS' : 400,
+  'SS'  : 366,
+  'S'   : 333,
+  'A+'  : 300,
+  'A'   : 275,
+  'A-'  : 250,
+  'B+'  : 225,
+  'B'   : 200,
+  'B-'  : 175,
+  'C+'  : 150,
+  'C'   : 125,
+  'C-'  : 100
 }
 
 const HP = {

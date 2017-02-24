@@ -1,13 +1,15 @@
 import { getATK, getHP, getDEF } from './datas'
+import { RANKS_MAP } from './datas'
 
 export default class Card {
 
-  constructor ({type, name, rank = {}}) {
+  constructor ({id, type, name, star}) {
+    this.id = id
     this.type = type
     this.name = name
-    this.rank = rank
     this.level = 1
     this.star = 1
+    this.rank = this.getRanks(require(`./${this.type}/datas/${this.id}`).default.baseRank)
 
     this.nigis = []
     this.skills = []
@@ -17,6 +19,14 @@ export default class Card {
       DEF: [0, 0],
       HP: [0, 0]
     }
+  }
+
+  getRanks (baseRank) {
+    const ranks = {}
+    for (let i in baseRank) {
+      ranks[i] = RANKS_MAP[baseRank[i] + this.star - 1]
+    }
+    return ranks
   }
 
   get baseATK () {
