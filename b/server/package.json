@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "fix": "eslint --fix --quiet true ./config/**/*.js",
-    "help": "eslint --help"
+    "eslint:fix": "eslint --fix ./src/**/*.js",
+    "start": "gulp"
   },
   "author": "William Yang",
   "license": "MIT",
@@ -15,7 +15,6 @@
     "compression": "^1.6.2",
     "connect-flash": "^0.1.1",
     "connect-mongo": "^1.2.0",
-    "consolidate": "^0.14.1",
     "cookie-parser": "^1.4.3",
     "express": "^4.13.4",
     "express-restify-mongoose": "^4.0.2",
@@ -27,18 +26,16 @@
     "method-override": "^2.3.6",
     "mongoose": "^4.4.19",
     "morgan": "^1.7.0",
-    "serve-favicon": "^2.3.0",
     "superagent": "^2.0.0",
-    "swig": "^1.4.2",
     "winston": "^2.2.0"
   },
   "devDependencies": {
-    "eslint": "^3.16.0",
+    "eslint": "^3.16.1",
     "eslint-config-standard": "^6.2.1",
     "eslint-plugin-promise": "^3.4.2",
     "eslint-plugin-standard": "^2.0.1",
     "gulp": "^3.9.1",
-    "gulp-eslint": "^2.0.0",
+    "gulp-eslint": "^3.0.1",
     "gulp-load-plugins": "^1.2.0",
     "gulp-nodemon": "^2.0.6",
     "nodemon": "^1.9.1",

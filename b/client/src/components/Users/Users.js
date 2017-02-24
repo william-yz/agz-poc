@@ -28,10 +28,10 @@ function Users ({ dispatch, list: dataSource, loading, total, page: current }) {
     })
   }
 
-  const createHandler = (id, values) => {
+  const createHandler = (values) => {
     dispatch({
       type: 'users/create',
-      payload: { id, values }
+      payload: { values }
     })
   }
   const columns = [

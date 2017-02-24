@@ -2,13 +2,6 @@
   "entry": "src/index.js",
   "disableCSSModules": false,
   "autoprefixer": null,
-  "proxy": {
-    "/api": {
-      "target": "http://jsonplaceholder.typicode.com/",
-      "changeOrigin": true,
-      "pathRewrite": { "^/api" : "" }
-    }
-  },
   "env": {
     "development": {
       "extraBabelPlugins": [

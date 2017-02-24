@@ -2,9 +2,8 @@
 
 module.exports = {
   gulpConfig: 'gulpfile.js',
-  models: 'models/**/*.js',
-  routes: 'routes/**/*.js',
-  config: 'config/*.js',
-  policies: 'policies/*.js',
-  views: 'views/*.html'
+  models: 'src/*/models/**/*.js',
+  routes: 'src/*routes/**/*.js',
+  config: 'src/*config/*.js',
+  policies: 'src/*policies/*.js'
 }

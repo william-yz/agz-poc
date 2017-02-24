@@ -3,23 +3,22 @@
 /**
  * Module dependencies.
  */
-var config = require('../config'),
+const config = require('../config'),
   express = require('express'),
   morgan = require('morgan'),
   logger = require('./logger'),
   bodyParser = require('body-parser'),
   session = require('express-session'),
   MongoStore = require('connect-mongo')(session),
-  favicon = require('serve-favicon'),
   compress = require('compression'),
   methodOverride = require('method-override'),
   cookieParser = require('cookie-parser'),
   helmet = require('helmet'),
   flash = require('connect-flash'),
-  consolidate = require('consolidate'),
   path = require('path'),
   _ = require('lodash'),
-  lusca = require('lusca')
+  lusca = require('lusca'),
+  restify = require('express-restify-mongoose')
 
 /**
  * Initialize local variables
@@ -51,20 +50,9 @@ module.exports.initMiddleware = function (app) {
     level: 9
   }))
 
-  // Initialize favicon middleware
-  app.use(favicon(app.locals.favicon))
-
   // Enable logger (morgan) if enabled in the configuration file
   if (_.has(config, 'log.format')) {
     app.use(morgan(logger.getLogFormat(), logger.getMorganOptions()))
-  }
-
-  // Environment dependent middleware
-  if (process.env.NODE_ENV === 'development') {
-    // Disable views cache
-    app.set('view cache', false)
-  } else if (process.env.NODE_ENV === 'production') {
-    app.locals.cache = 'memory'
   }
 
   // Request body parsing middleware should be above methodOverride
@@ -77,18 +65,6 @@ module.exports.initMiddleware = function (app) {
   // Add the cookie parser and flash middleware
   app.use(cookieParser())
   app.use(flash())
-}
-
-/**
- * Configure view engine
- */
-module.exports.initViewEngine = function (app) {
-  // Set swig as the template engine
-  app.engine('server.view.html', consolidate[config.templateEngine])
-
-  // Set views path and view engine
-  app.set('view engine', 'server.view.html')
-  app.set('views', './')
 }
 
 /**
@@ -120,7 +96,7 @@ module.exports.initSession = function (app, db) {
  * Invoke modules server configuration
  */
 module.exports.initModulesConfiguration = function (app, db) {
-  config.files.server.configs.forEach(function (configPath) {
+  config.files.configs.forEach(function (configPath) {
     require(path.resolve(configPath))(app, db)
   })
 }
@@ -144,24 +120,11 @@ module.exports.initHelmetHeaders = function (app) {
 }
 
 /**
- * Configure the modules static routes
- */
-module.exports.initModulesClientRoutes = function (app) {
-  // Setting the app router and static folder
-  app.use('/', express.static(path.resolve('./public')))
-
-  // Globbing static routing
-  config.folders.client.forEach(function (staticPath) {
-    app.use(staticPath, express.static(path.resolve('./' + staticPath)))
-  })
-}
-
-/**
  * Configure the modules ACL policies
  */
 module.exports.initModulesServerPolicies = function (app) {
   // Globbing policy files
-  config.files.server.policies.forEach(function (policyPath) {
+  config.files.policies.forEach(function (policyPath) {
     require(path.resolve(policyPath)).invokeRolesPolicies()
   })
 }
@@ -171,7 +134,7 @@ module.exports.initModulesServerPolicies = function (app) {
  */
 module.exports.initModulesServerRoutes = function (app) {
   // Globbing routing files
-  config.files.server.routes.forEach(function (routePath) {
+  config.files.routes.forEach(function (routePath) {
     require(path.resolve(routePath))(app)
   })
 }
@@ -179,11 +142,7 @@ module.exports.initModulesServerRoutes = function (app) {
 module.exports.initRestifyMongoose = function (app) {
   var router = express.Router()
   var mongoose = require('mongoose')
-  restify.serve(router, mongoose.model('Position'))
-  restify.serve(router, mongoose.model('Application'))
-  restify.serve(router, mongoose.model('Seeker'))
-  restify.serve(router, mongoose.model('Staff'))
-  restify.serve(router, mongoose.model('Company'))
+  restify.serve(router, mongoose.model('Users'))
   app.use(router)
 }
 
@@ -200,11 +159,23 @@ module.exports.initErrorRoutes = function (app) {
     // Log it
     console.error(err.stack)
 
-    // Redirect to error page
-    res.redirect('/server-error')
+    next()
   })
 }
 
+module.exports.handleCORS = function (app) {
+  app.all('*', function (req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*')
+    res.header('Access-Control-Allow-Headers', 'Content-Type,Content-Length, Authorization, Accept,X-Requested-With')
+    res.header('Access-Control-Allow-Methods', 'PUT,POST,GET,DELETE,PATCH,OPTIONS')
+    res.header('X-Powered-By', ' 3.2.1')
+    if (req.method === 'OPTIONS') {
+      res.send(200)
+    } else {
+      next()
+    }
+  })
+}
 /**
  * Initialize the Express application
  */
@@ -212,20 +183,16 @@ module.exports.init = function (db) {
   // Initialize express app
   var app = express()
 
+  this.handleCORS(app)
+
   // Initialize local variables
   this.initLocalVariables(app)
 
   // Initialize Express middleware
   this.initMiddleware(app)
 
-  // Initialize Express view engine
-  this.initViewEngine(app)
-
   // Initialize Helmet security headers
   this.initHelmetHeaders(app)
-
-  // Initialize modules static client routes, before session!
-  this.initModulesClientRoutes(app)
 
   // Initialize Express session
   this.initSession(app, db)
@@ -237,6 +204,7 @@ module.exports.init = function (db) {
   this.initModulesServerPolicies(app)
 
   this.initRestifyMongoose(app)
+
   // Initialize modules server routes
   this.initModulesServerRoutes(app)
 
