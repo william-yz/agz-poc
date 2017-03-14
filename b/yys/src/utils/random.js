@@ -8,3 +8,7 @@ export function satisfy (n) {
   }
   return n > nextInt(10000)
 }
+
+export function oneOf (arr) {
+  return arr[nextInt(arr.length)]
+}

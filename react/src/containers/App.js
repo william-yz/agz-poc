@@ -24,12 +24,10 @@ const App = ({children}) => {
   return (
     <Layout>
       <Sider
-        style={{height: '600px'}}
         collapsible="true">
         <Nav navs={navs}></Nav>
       </Sider>
-      <Content
-        style={{height: '600px'}}>
+      <Content>
         { children }
       </Content>
     </Layout>

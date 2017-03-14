@@ -23,7 +23,6 @@ class Home extends React.Component {
   render () {
     return (
       <Layout>
-        <Sider>left sidebar</Sider>
         <Content>
           <FieldsCanvas onClickEdit={::this.onClickEdit}/>
         </Content>

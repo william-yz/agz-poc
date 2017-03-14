@@ -1,36 +1,44 @@
 import { nextInt } from '../../utils/random'
+import { compose } from '../../utils'
+import { chooseCard } from './cardsMap'
 
-export const normal = () => {
+const normal = () => {
   const n = nextInt(10000)
   if (n < 8000) {
-    return 'n'
+    return 'N'
   } else if (n < 9900) {
-    return 'r'
+    return 'R'
   } else if (n < 9990) {
-    return 'sr'
+    return 'SR'
   } else {
-    return 'ssr'
+    return 'SSR'
   }
 }
 
-export const middle = () => {
+const middle = () => {
   const n = nextInt(10000)
   if (n < 7500) {
-    return 'r'
+    return 'R'
   } else if (n < 9900) {
-    return 'sr'
+    return 'SR'
   } else {
-    return 'ssr'
+    return 'SSR'
   }
 }
 
-export const advanced = () => {
+const advanced = () => {
   const n = nextInt(10000)
   if (n < 7000) {
-    return 'r'
+    return 'R'
   } else if (n < 9800) {
-    return 'sr'
+    return 'SR'
   } else {
-    return 'ssr'
+    return 'SSR'
   }
+}
+
+export default {
+  normal: compose(normal, chooseCard),
+  middle: compose(middle, chooseCard),
+  advanced: compose(advanced, chooseCard)
 }

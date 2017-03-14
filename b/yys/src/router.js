@@ -1,13 +1,13 @@
 import React from 'react'
 import { Router } from 'dva/router'
 
-const cached = {}
-function registerModel (app, model) {
-  if (!cached[model.namespace]) {
-    app.model(model)
-    cached[model.namespace] = 1
-  }
-}
+// const cached = {}
+// function registerModel (app, model) {
+//   if (!cached[model.namespace]) {
+//     app.model(model)
+//     cached[model.namespace] = 1
+//   }
+// }
 
 function RouterConfig ({ history, app }) {
   const routes = [
@@ -17,16 +17,6 @@ function RouterConfig ({ history, app }) {
       getComponent (nextState, cb) {
         require.ensure([], (require) => {
           cb(null, require('./routes/IndexPage').default)
-        })
-      }
-    },
-    {
-      path: '/users',
-      name: 'UsersPage',
-      getComponent (nextState, cb) {
-        require.ensure([], (require) => {
-          registerModel(app, require('./models/users').default)
-          cb(null, require('./routes/Users'))
         })
       }
     }

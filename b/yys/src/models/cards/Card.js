@@ -9,7 +9,7 @@ export default class Card {
     this.name = name
     this.level = 1
     this.star = 1
-    this.rank = this.getRanks(require(`./${this.type}/datas/${this.id}`).default.baseRank)
+    // this.rank = this.getRanks(require(`./${this.type}/datas/${this.id}`).default.baseRank)
 
     this.nigis = []
     this.skills = []
@@ -86,6 +86,6 @@ export default class Card {
   }
 
   afterDefense () {
-    
+
   }
 }
