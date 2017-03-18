@@ -27,7 +27,6 @@ const middle = () => {
 }
 
 const advanced = () => {
-  return 'SSR'
   const n = nextInt(10000)
   if (n < 7000) {
     return 'R'

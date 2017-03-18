@@ -1,9 +1,11 @@
 import { getATK, getHP, getDEF, getSPEED, getCTRI } from './datas'
+import { uid } from '../utils'
 
 export default class Card {
 
   constructor ({id, type, name, star}) {
-    this.id = id
+    this._id = id
+    this.id = uid()
     this.type = type
     this.name = name
     this.level = 1
