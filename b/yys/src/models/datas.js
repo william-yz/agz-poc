@@ -36,6 +36,14 @@ const DEF = {
   C: 65
 }
 
+const SPEED = {
+
+}
+
+const CTRI = {
+
+}
+
 const ATK_RATE = 0.05
 const HP_RATE = 0.05
 const DEF_RATE = 0.05
@@ -48,4 +56,10 @@ export function getDEF(rank, level) {
 }
 export function getHP(rank, level) {
   return floor(HP[rank] * pow(1 + HP_RATE, level - 1))
+}
+export function getSPEED(rank, level) {
+  return SPEED[rank]
+}
+export function getCTRI(rank, level) {
+  return CTRI[rank]
 }

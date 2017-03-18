@@ -3,6 +3,7 @@ import { connect } from 'dva'
 import { Button, message } from 'antd'
 
 import draw from '../models/draw/draw'
+
 //normalChances, middleChances, advancedChances
 const Drawer = ({ dispatch, player}) => {
   const onDraw = type => () => {

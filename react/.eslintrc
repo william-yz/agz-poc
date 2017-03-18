@@ -28,5 +28,9 @@
     "ecmaFeatures": {
       "experimentalObjectRestSpread": true
     }
-  }
+  },
+  "plugins": [
+    "react",
+    "jsx-a11y"
+  ]
 }

@@ -1,4 +1,4 @@
-import { uid } from '../utils'
+
 
 export default {
   namespace: 'card',
@@ -6,11 +6,8 @@ export default {
     cards: []
   },
   reducers: {
-    add (state, {payload: card}) {
-      return {...state, cards: [...state.cards, {
-        id: uid(),
-        card
-      }]}
+    add (state, { payload: { card } }) {
+      return {...state, cards: [...state.cards, card]}
     }
   }
 }

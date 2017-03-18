@@ -5,6 +5,7 @@ const TabPane = Tabs.TabPane
 
 import Drawer from './Drawer'
 import Header from './Header'
+import Cards from './Cards'
 import './IndexPage.css'
 
 const IndexPage = ({ location }) => {
@@ -13,8 +14,8 @@ const IndexPage = ({ location }) => {
       <Layout.Header className="header"><Header /></Layout.Header>
       <Layout.Content>
         <Tabs type="card">
-          <TabPane tab="Tab 1" key="1"><Drawer /></TabPane>
-          <TabPane tab="Tab 2" key="2">Content of Tab Pane 2</TabPane>
+          <TabPane tab="Draw" key="1"><Drawer /></TabPane>
+          <TabPane tab="Tab 2" key="2"><Cards /></TabPane>
           <TabPane tab="Tab 3" key="3">Content of Tab Pane 3</TabPane>
         </Tabs>
       </Layout.Content>
