@@ -1,6 +1,6 @@
 import { getATK, getHP, getDEF, getSPEED, getCTRI } from './datas'
 import { uid } from '../utils'
-
+import { satisfy } from '../utils/random'
 export default class Card {
 
   constructor ({id, type, name, star}) {
@@ -20,7 +20,8 @@ export default class Card {
       DEF: [0, 0],
       HP: [0, 0],
       SPEED: 0,
-      CTRI: 0
+      CTRI: '0%',
+      CTRIDMG: '0%'
     }
   }
 
@@ -64,47 +65,31 @@ export default class Card {
     return this.extra.CTRI
   }
 
-  get ATK () {
+  get extraCTRIDMG () {
+    return this.extra.CTRIDMG
+  }
+
+  get atk () {
     return this.baseATK + this.extraATK
   }
 
-  get DEF () {
+  get def () {
     return this.baseDEF + this.extraDEF
   }
 
-  get HP () {
+  get hp () {
     return this.baseHP + this.extraHP
   }
 
-  get SPEED () {
+  get speed () {
     return this.baseSPEED + this.extraSPEED
   }
 
-  get CTRI () {
+  get ctri () {
     return this.baseCTRI + this.extraCTRI
   }
 
-  beforeAttack () {
-
-  }
-
-  attack (targets) {
-
-  }
-
-  afterAttack () {
-
-  }
-
-  beforeDefense () {
-
-  }
-
-  defense () {
-
-  }
-
-  afterDefense () {
-
+  get ctriDmg () {
+    return parseInt(this.extraCTRIDMG, 10) + 150 + '%'
   }
 }

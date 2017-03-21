@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import { oneOf } from './random'
-
+const debug = true
 export function compose () {
     return _.reduce(arguments, (prev, curr) => {
         return function () {
@@ -23,4 +23,9 @@ export function range (n, cb) {
       }
     }
   }
+}
+
+export function log (str) {
+  if (debug)
+    console.log(str)
 }
